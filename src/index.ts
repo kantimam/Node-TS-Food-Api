@@ -1,11 +1,10 @@
 import express from 'express';
+import { getRecipe } from './db';
 
 const app = express();
 const port = 3000;
 
-const test = {
-  hey: { ho: 13 },
-};
+getRecipe();
 
 app.use((error, req, res, next) => {
   console.error(error.stack);
@@ -21,10 +20,9 @@ app.use((req, res, next) => {
   next();
 });
 
-const doubleQuote = 'hello';
-const hey = 'ho';
 
 app.get('/', (req, res, next) => {
+
   res.send('The sedulous hyena ate the antelope!');
 });
 
