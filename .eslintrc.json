@@ -43,6 +43,7 @@
         "class-methods-use-this": "off",
         "no-unused-expressions": "off",
         "quotes": ["error", "single"],
+        "camelcase": "off",
         "import/extensions": [
             "off",
             "ignorePackages",

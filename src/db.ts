@@ -11,10 +11,10 @@ const db = knex({
 
 
 
-type Recipe = {
-    'recipe_id': number,
-    'recipe_name': string,
-    'recipe_description': string
+export type Recipe = {
+    recipe_name: string,
+    recipe_description: string,
+    recipe_id?: number
 }
 
 
@@ -26,7 +26,13 @@ export async function getRecipe() {
 
 }
 
-/* getRecipe(); */
+export async function createRecipe(recipe: Recipe) {
+    console.log(recipe)
+    return Recipes.insert({
+        recipe_name: 'another test',
+        recipe_description: 'another desc'
+    }).returning('recipe_name');
+}
 
 
 

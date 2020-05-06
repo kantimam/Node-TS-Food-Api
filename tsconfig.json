@@ -8,5 +8,9 @@
     "outDir": "dist",
     "baseUrl": "./src/"
   },
+  "typeRoots": [
+    "@types",
+    "./node_modules/@types",
+  ],
   "lib": ["es2015"]
 }

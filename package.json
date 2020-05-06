@@ -13,7 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express-serve-static-core": "^4.17.6",
+    "@types/formidable": "^1.0.31",
     "express": "^4.17.1",
+    "express-formidable": "^1.2.0",
+    "formidable": "^1.2.2",
     "knex": "^0.21.1",
     "pg": "^8.0.3",
     "sqlite3": "^4.2.0"
