@@ -1,37 +1,41 @@
-import express, { Request } from 'express';
-import formidable from 'express-formidable';
-import { getRecipe, createRecipe, Recipe } from './db/db';
+import 'reflect-metadata';
+import { createConnection, LessThan, MoreThan } from 'typeorm';
+import express from 'express';
+import { Recipe } from './entity/Recipe'
 
-const app = express();
-const port = 3000;
+// Connects to the Database -> then starts the express
+createConnection()
+  .then(async connection => {
+    // Create a new express application instance
+    const app = express();
 
-getRecipe();
+    // Call midlewares
 
-app.use(formidable());
+    // Set all routes from routes folder
+    /* app.use('/', routes); */
 
+    app.get('/', (req, res) => {
+      res.send('welcome to my api')
+    })
 
-app.get('/', (req, res, next) => {
-  getRecipe();
-  res.send('The sedulous hyena ate the antelope!');
-});
+    app.get('/recipes', async (req, res) => {
+      const recipe = await connection.manager.find(Recipe, { id: MoreThan(0) });
+      console.log(recipe);
+      res.send(recipe)
+    })
 
-type RequestWithRecipe = express.Request & { fields: Recipe }
+    app.get('/make', async (req, res) => {
+      const recipe = new Recipe()
+      recipe.name = 'my spicy test';
+      recipe.description = 'hopefully working'
+      const succ = await connection.manager.save(recipe)
+      console.log(succ);
+      res.send(succ)
+    })
 
-app.post('/', async (req: RequestWithRecipe, res, next) => {
-  try {
-    const recipe = await createRecipe(req.fields)
-    res.send(recipe);
-  }
-  catch (e) {
-    console.log(e)
-    res.send('failed to create');
-  }
-});
+    app.listen(3000, () => {
+      console.log('Server started on port 3000!');
+    });
+  })
+  .catch(error => console.log(error));
 
-
-app.listen(port, (err) => {
-  if (err) {
-    return console.error(err);
-  }
-  return console.log(`server is listening on ${port}`);
-});
