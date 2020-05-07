@@ -1,13 +1,4 @@
-import knex = require('knex')
-const db = knex({
-    client: 'pg',
-    connection: {
-        host: '127.0.0.1',
-        user: 'kantemir',
-        password: 'kantemir',
-        database: 'feed'
-    }
-});
+import db from './knex';
 
 
 
@@ -34,6 +25,13 @@ export async function createRecipe(recipe: Recipe) {
     }).returning('recipe_name');
 }
 
+export type Ingredient = {
+
+}
+
+/* export async function createIngredient(ingredient: Ingredient){
+
+} */
 
 
 export default getRecipe

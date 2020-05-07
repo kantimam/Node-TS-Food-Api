@@ -1,6 +1,6 @@
 import express, { Request } from 'express';
 import formidable from 'express-formidable';
-import { getRecipe, createRecipe, Recipe } from './db';
+import { getRecipe, createRecipe, Recipe } from './db/db';
 
 const app = express();
 const port = 3000;
