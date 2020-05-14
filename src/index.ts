@@ -1,7 +1,10 @@
 import 'reflect-metadata';
 import { createConnection, LessThan, MoreThan } from 'typeorm';
 import express from 'express';
+import cors from 'cors';
 import { Recipe } from './entity/Recipe'
+
+const PORT = 5000;
 
 // Connects to the Database -> then starts the express
 createConnection()
@@ -10,6 +13,8 @@ createConnection()
     const app = express();
 
     // Call midlewares
+    app.use(cors({ origin: '*' }))
+
 
     // Set all routes from routes folder
     /* app.use('/', routes); */
@@ -18,10 +23,11 @@ createConnection()
       res.send('welcome to my api')
     })
 
-    app.get('/recipes', async (req, res) => {
+    app.get('/api/recipes', async (req, res) => {
       const recipe = await connection.manager.find(Recipe, { id: MoreThan(0) });
       console.log(recipe);
-      res.send(recipe)
+
+      res.send([{ name: 'asd' }, { name: 'be' }, { name: 'ge' }])
     })
 
     app.get('/make', async (req, res) => {
@@ -33,8 +39,8 @@ createConnection()
       res.send(succ)
     })
 
-    app.listen(3000, () => {
-      console.log('Server started on port 3000!');
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
     });
   })
   .catch(error => console.log(error));
