@@ -12,6 +12,20 @@ export class Recipe {
     @Column('text')
     description: string
 
+    @Column('varchar', {
+        nullable: true
+    })
+    prep_time: string
+
+    @Column('varchar', {
+        nullable: true
+    })
+    cook_time: string
+
+    @Column('tinyint', {
+        nullable: true
+    })
+    difficulty: number
 
 }
 
