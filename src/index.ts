@@ -1,15 +1,16 @@
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import api from './routes/api';
 
+const mongoUri = 'mongodb://127.0.0.1:27017/feed';
 const PORT = 5000;
 
-// Connects to the Database -> then starts the express
-createConnection()
-  .then(async _connection => {
-    // Create a new express application instance
+(async () => {
+  try {
+    await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+
     const app = express();
 
     // Call midlewares
@@ -18,11 +19,14 @@ createConnection()
 
     app.use('/api', api)
 
-
-
     app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
     });
-  })
-  .catch(error => console.log(error));
+  }
+  catch (e) {
+    console.log(e)
+  }
+
+})()
+
 
