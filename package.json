@@ -23,6 +23,7 @@
       "knex-migrate": "^1.7.4",
       "mysql": "^2.14.1",
       "pg": "^8.0.3",
+      "recipe-scraper": "^1.18.0",
       "reflect-metadata": "^0.1.10",
       "sqlite3": "^4.2.0",
       "typeorm": "0.2.24"
