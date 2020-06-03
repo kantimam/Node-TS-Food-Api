@@ -15,6 +15,14 @@ export const RecipeSchema = new Schema({
         required: false,
         default: 0
     },
+    time: {
+        prep: { type: String, required: false },
+        cook: { type: String, required: false },
+        active: { type: String, required: false },
+        inactive: { type: String, required: false },
+        ready: { type: String, required: false },
+        total: { type: String, required: false }
+    },
     difficulty: {
         type: Number,
         required: false,
@@ -26,10 +34,11 @@ export const RecipeSchema = new Schema({
         type: [String],
         required: true,
     },
-    steps: {
+    instructions: {
         type: {
             id: {
                 type: Number,
+                unique: true,
                 required: true
             },
             description: {
@@ -42,12 +51,52 @@ export const RecipeSchema = new Schema({
         type: Number,
         required: false,
         default: 1
-    }
+    },
+    images: [
+        {
+            id: {
+                type: Number,
+                required: true,
+                unique: true
+            },
+            path: {
+                type: String,
+                required: true
+            }
+        }
+    ]
 })
 
 
 export interface IRecipe extends Document {
+    name: string,
+    prep_time?: number,
+    cook_time?: number,
+    difficulty?: number,
+    ingredients: string[],
+    instructions: Instruction[],
+    servings: number,
+    images: Image[],
+    time?: ScrapedTime
+}
 
+interface Instruction {
+    id: number,
+    description: string
+}
+
+interface Image {
+    id: number,
+    path: string
+}
+
+interface ScrapedTime {
+    prep?: string
+    cook?: string
+    active?: string
+    inactive?: string
+    ready?: string
+    total?: string
 }
 
 const Recipe = model<IRecipe>('Recipes', RecipeSchema)
